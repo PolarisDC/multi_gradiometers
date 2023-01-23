@@ -72,6 +72,7 @@ setup(
     # packages=[
     #     'atom_interferometer_dm',
     # ],
+    py_modules = ['aidm','data','drivers','results'],
     install_requires=INSTALL_REQUIRES,
     # extras_require=EXTRAS_REQUIRE,
     tests_require=['pytest==3.8.2',],
