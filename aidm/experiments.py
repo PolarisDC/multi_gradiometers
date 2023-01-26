@@ -95,14 +95,83 @@ class Stanford(Experiment):
     Texp: float = 1.910*u.s
     Nmeas: int = int((1.*u.yr/Texp).to(''))
 
+@dataclass
+class AION10Broadband(Experiment):
+    name: str = 'AION10Broadband'
+    N: float = 87*1.e6
+    A: float = 87
+    amin: float = (2.e-13*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (2*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 1.48*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
 
 @dataclass
-class AION(Experiment):
-    name: str = 'AION'
-    N: float = 87*10.e10
+class AION10BroadbandNFixed(Experiment):
+    name: str = 'AION10BroadbandNFixed'
+    N: float = 100
     A: float = 87
-    amin: float = (1.e-15*u.m/u.s**2*1./const.c).to(u.Hz)
+    amin: float = (2.e-13*u.m/u.s**2*1./const.c).to(u.Hz)
     r: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
-    deltax: float = (100*u.m*lp).to(u.MeV**(-1))
-    Texp: float = 7*u.s
+    deltax: float = (2*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 1.48*u.s
     Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+@dataclass
+class AION10Resonant(Experiment):
+    name: str = 'AION10Resonant'
+    N: float = 87*1.e6
+    A: float = 87
+    amin: float = (2.e-13*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 1.2*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+
+@dataclass
+class AION10ResonantNFixed(Experiment):
+    name: str = 'AION10ResonantNFixed'
+    N: float = 100
+    A: float = 87
+    amin: float = (2.e-13*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 1.2*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+@dataclass
+class AION10_amin_2eminus13(Experiment):
+    name: str = 'AION10_amin_2eminus13'
+    N: float = 87*1e6
+    A: float = 87
+    amin: float = (2.e-13*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (2*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 1.48*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+@dataclass
+class AION100(Experiment):
+    name: str = 'AION100'
+    N: float = 87*1e10
+    A: float = 87
+    amin: float = (6.e-17*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (20*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 4.62*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+@dataclass
+class AION1km(Experiment):
+    name: str = 'AION1km'
+    N: float = 87*1e10
+    A: float = 87
+    amin: float = (2.e-18*u.m/u.s**2*1./const.c).to(u.Hz)
+    r: float = (1.e-3*u.m*lp).to(u.MeV**(-1))
+    deltax: float = (200*u.m*lp).to(u.MeV**(-1))
+    Texp: float = 14.28*u.s
+    Nmeas: int = int((1.*u.yr/Texp).to(''))
+
+

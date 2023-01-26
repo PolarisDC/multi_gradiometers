@@ -20,7 +20,7 @@ from aidm.const import tp, lp, rhox, vesc, vdm
 import aidm.experiments as x
 from aidm.cross_sections import cs_limit, cs_limit_mod
 
-exps = ['AION']# exps = ['GDM', 'MAQRO', 'Pino', 'BECCAL', 'Stanford']
+exps = ['AION10_amin_2eminus13', 'AION100', 'AION1km']  # exps = ['GDM', 'MAQRO', 'Pino', 'BECCAL', 'Stanford']
 mxs = np.logspace(-6.5, 3.5, 1000)*u.MeV
 
 try:
@@ -118,6 +118,6 @@ def get_lim(ex, mphi_ratio = mphiratios, medtype='light',
         return 0
     return 0
 
-if __name__ == "__main__":## Run
+if __name__ == "__main__":## Run, added __name__ = main to prevent running when importing
     for ex in exps:
         get_lim(ex, medtype=med, phase=phase)
