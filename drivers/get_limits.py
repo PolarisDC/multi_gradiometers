@@ -20,7 +20,7 @@ from aidm.const import tp, lp, rhox, vesc, vdm
 import aidm.experiments as x
 from aidm.cross_sections import cs_limit, cs_limit_mod
 
-exps = ['AION10_amin_2eminus13', 'AION100', 'AION1km']  # exps = ['GDM', 'MAQRO', 'Pino', 'BECCAL', 'Stanford']
+exps = ['AION10BroadbandNFixed', 'AION100NFixed', 'AION1kmNFixed']  # exps = ['GDM', 'MAQRO', 'Pino', 'BECCAL', 'Stanford']
 mxs = np.logspace(-6.5, 3.5, 1000)*u.MeV
 
 try:
@@ -33,7 +33,7 @@ except:
     phase = False
 
 if med == 'light':
-    mphiratios = [1.e-10, 1.e-9, 1.e-7, 1.e-6, 1.e-5, 1.e-4, 1.e-3, 1.e-2]
+    mphiratios = [1.e-15,1.e-14, 1.e-13, 1.e-12] #, 1.e-6, 1.e-5, 1.e-4, 1.e-3, 1.e-2]
 elif med == 'fixed_light':
     mphiratios = (1.*u.eV).to(u.MeV).value
 else:
