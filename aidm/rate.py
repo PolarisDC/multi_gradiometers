@@ -15,13 +15,7 @@ import warnings
 u.set_enabled_equivalencies(u.mass_energy())
 gdm = GDM() ## to set default experiment
 
-velocity_selection = False
-if velocity_selection:
-    line_width = 1*u.Hz
-    mass_atom = 100*u.GeV
-    k = 1e15*u.Hz
-    qmax = ((mass_atom*line_width)/(2*k)).to(u.MeV)
-
+velocity_selection = True
 
 def rate_prefac(mx, ex=gdm, cs=1.*u.cm**2, vdm=vdm, N0=N0(vdm=vdm, vesc=vesc)):
     cs = (cs*lp**2).to(u.GeV**(-2))
@@ -81,6 +75,15 @@ def phase_integral(q, mx, ex=gdm, vdm=vdm, ve=ve, vesc=vesc, real=True):
     return res
 
 def rate_integral(mx, ex=gdm, phase=False, exactphase=False):
+    if velocity_selection:
+        line_width = 1*u.Hz
+        mass_atom = 100*u.GeV
+        k = 1e15*u.Hz
+        qmax = ((mass_atom*line_width)/(2*k)).to(u.MeV)
+        
+    else:
+        qmax = np.inf
+
     formfacexp = lambda q: (1+ex.A*helmformfac(q, ex=ex)**2+ex.N*(formfac(q*ex.r.value))**2)
     if phase:
         integrand = lambda q: q*phase_integral(q, mx.value, ex=ex)*formfacexp(q)
@@ -93,20 +96,27 @@ def rate_integral(mx, ex=gdm, phase=False, exactphase=False):
             qs = np.logspace(np.log10(1./ex.deltax.value)-10, np.log10(1./ex.deltax.value)+10, 100000)
             return simpson(integrand(qs), x=qs)*u.MeV**(-2)
     else:
-        if not velocity_selection:
-            qmax = np.inf
         if ex.name in ['GDM', 'BECCAL', 'Stanford']:
             ## for GDM and BECCAL, if in heavy med limit, helm form factor
             ## introduces numerical instability, but doesn't affect low mx
             ## limits. So, just take out.
             formfacexp = lambda q: (1+ex.N*(formfac(q*ex.r.value))**2)
         integrand = lambda q: q*(1.-np.sin(q*ex.deltax.value)/(q*ex.deltax.value))*formfacexp(q)*expfac(q, mx)
-    return quad_vec(integrand, 0., qmax)[0]*u.MeV**2
+        return quad_vec(integrand, 0., qmax.value)[0]*u.MeV**2
 
 def light_rate_integral(mx, ex=gdm, mphi=None, phase=False, exactphase=False):
     if mphi == None:
         mphi = 1.e-5*mx
-
+    
+    if velocity_selection:
+        line_width = 1*u.Hz
+        mass_atom = 100*u.GeV
+        k = 1e15*u.Hz
+        qmax = ((mass_atom*line_width)/(2*k)).to(u.MeV)
+        
+    else:
+        qmax = 1.
+    
     if ex.name in ['GDM', 'BECCAL', 'Stanford']:
         formfacexp = lambda q: (1+ex.A*helmformfac(q, ex=ex)**2+ex.N*(np.exp(-(0.5*q*ex.r.value)**2))**2)
 
@@ -124,10 +134,8 @@ def light_rate_integral(mx, ex=gdm, mphi=None, phase=False, exactphase=False):
             qs = np.logspace(np.log10(1./ex.deltax.value)-10, np.log10(1./ex.deltax.value)+10, 100000)
             return simpson(integrand(qs), x=qs)*u.MeV**(-2)
     else:
-        if not velocity_selection:
-            qmax = 1.
         integrand = lambda q: q/(q**2 + mphi.value**2)**2*(1.-np.sin(q*ex.deltax.value)/(q*ex.deltax.value))*formfacexp(q)*expfac(q, mx)
-        return quad_vec(integrand, 1.e-40, qmax)[0]*u.MeV**(-2)
+        return quad_vec(integrand, 1.e-40, qmax.value)[0]*u.MeV**(-2)
 
 
 def rate(mx, ex=gdm, medtype = 'light', mphi=None, phase=False):
