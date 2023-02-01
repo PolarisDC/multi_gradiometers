@@ -33,7 +33,7 @@ except:
     phase = False
 
 if med == 'light':
-    mphiratios = [1.e-15,1.e-14, 1.e-13, 1.e-12] #, 1.e-6, 1.e-5, 1.e-4, 1.e-3, 1.e-2]
+    mphiratios = [1.e-10, 1.e-7, 1.e-5, 1.e-3]
 elif med == 'fixed_light':
     mphiratios = (1.*u.eV).to(u.MeV).value
 else:
